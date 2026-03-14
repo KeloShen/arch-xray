@@ -1,0 +1,85 @@
+@startuml OpenClaw_Gateway_Component
+title OpenClaw - Gateway Component Diagram
+
+skinparam monochrome false
+skinparam defaultFontName Arial
+skinparam backgroundColor #FFFFFF
+
+package "Gateway Server" {
+    component "WebSocket Server" as WebSocketServer
+    component "Auth Handler" as AuthHandler
+    component "Rate Limiter" as RateLimiter
+    component "Method Router" as MethodRouter
+    component "Config Loader" as ConfigLoader
+    component "Plugin Loader" as PluginLoader
+    component "Hook Engine" as HookEngine
+    component "Session Manager" as SessionManager
+    component "Channel Manager" as ChannelManager
+    component "Node Registry" as NodeRegistry
+    component "Cron Service" as CronService
+    component "Message Router" as MessageRouter
+    component "Event Dispatcher" as EventDispatcher
+    component "Control UI Server" as ControlUIServer
+    component "Canvas Host" as CanvasHost
+    component "Browser Controller" as BrowserController
+    database "Sessions DB" as SessionsDB
+    database "Config DB" as ConfigDB
+    database "Pairing DB" as PairingDB
+}
+
+package "External Interfaces" {
+    component "Pi Agent" as PiAgent
+    component "CLI Client" as CLI
+    component "WebChat" as WebChat
+    component "Mobile Apps" as MobileApps
+}
+
+package "Channel Plugins" {
+    component "Telegram" as TelegramH
+    component "WhatsApp" as WhatsAppH
+    component "Slack" as SlackH
+    component "Discord" as DiscordH
+    component "Signal" as SignalH
+    component "Other Channels" as OtherChannels
+}
+
+package "AI Services" {
+    rectangle "OpenAI API" as OpenAI
+    rectangle "Anthropic API" as Anthropic
+}
+
+CLI --> WebSocketServer : connects
+WebChat --> WebSocketServer : connects
+MobileApps --> WebSocketServer : connects
+WebSocketServer --> AuthHandler : validates
+AuthHandler --> RateLimiter : rate limit check
+WebSocketServer --> MethodRouter : routes methods
+MethodRouter --> SessionManager : manages
+MethodRouter --> ChannelManager : manages
+MethodRouter --> NodeRegistry : manages
+ConfigLoader --> PluginLoader : loads plugins
+ConfigLoader --> HookEngine : executes hooks
+ChannelManager --> TelegramH : routes
+ChannelManager --> WhatsAppH : routes
+ChannelManager --> SlackH : routes
+ChannelManager --> DiscordH : routes
+ChannelManager --> SignalH : routes
+ChannelManager --> OtherChannels : routes
+TelegramH --> PiAgent : delivers messages
+WhatsAppH --> PiAgent : delivers messages
+SlackH --> PiAgent : delivers messages
+SessionManager --> SessionsDB : persists
+ConfigLoader --> ConfigDB : read/write
+ChannelManager --> PairingDB : pairing info
+MethodRouter --> ControlUIServer : serves UI
+MethodRouter --> CanvasHost : renders
+MethodRouter --> BrowserController : controls
+PiAgent --> OpenAI : calls
+PiAgent --> Anthropic : calls
+CronService --> MethodRouter : triggers
+HookEngine --> MethodRouter : triggers
+EventDispatcher --> PiAgent : notifies
+EventDispatcher --> CLI : notifies
+EventDispatcher --> WebChat : notifies
+
+@enduml

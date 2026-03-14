@@ -1,0 +1,73 @@
+@startuml OpenClaw_Agent_Component
+title OpenClaw - Pi Agent Component Diagram
+
+skinparam monochrome false
+skinparam defaultFontName Arial
+skinparam backgroundColor #FFFFFF
+
+package "Pi Agent Runtime" {
+    component "ACP Connection" as ACPConnection
+    component "Session Core" as SessionCore
+    component "Translator" as Translator
+    component "Prompt Processor" as PromptProcessor
+    component "Response Generator" as ResponseGenerator
+    component "Streaming Handler" as StreamingHandler
+    component "Tool Registry" as ToolRegistry
+    component "Skill Manager" as SkillManager
+    component "Memory System" as MemorySystem
+    component "Auth Profile Manager" as AuthProfileManager
+    component "Failover Handler" as FailoverHandler
+    component "Rate Limit Guard" as RateLimitGuard
+    component "Token Tracker" as TokenTracker
+    component "Context Manager" as ContextManager
+}
+
+package "Gateway Interface" {
+    component "Gateway WebSocket" as GatewayWS
+}
+
+package "Tools Layer" {
+    component "Browser Tool" as BrowserTool
+    component "Canvas Tool" as CanvasTool
+    component "Media Tool" as MediaTool
+    component "Node Tool" as NodeTool
+    component "Sessions Tool" as SessionsTool
+    component "Cron Tool" as CronTool
+}
+
+package "AI Services" {
+    rectangle "OpenAI API" as OpenAI
+    rectangle "Anthropic API" as Anthropic
+    rectangle "Other LLMs" as OtherLLM
+}
+
+database "Memory DB" as MemoryDB
+database "Sessions DB" as SessionsDB
+
+GatewayWS --> ACPConnection : bidirectional
+ACPConnection --> Translator : translates
+Translator --> SessionCore : delivers events
+SessionCore --> PromptProcessor : processes input
+PromptProcessor --> ResponseGenerator : generates response
+ResponseGenerator --> StreamingHandler : streams output
+SessionCore --> ToolRegistry : requests tools
+SessionCore --> SkillManager : loads skills
+SessionCore --> MemorySystem : store/retrieve
+ToolRegistry --> BrowserTool : calls
+ToolRegistry --> CanvasTool : calls
+ToolRegistry --> MediaTool : calls
+ToolRegistry --> NodeTool : calls
+ToolRegistry --> SessionsTool : calls
+ToolRegistry --> CronTool : calls
+ResponseGenerator --> AuthProfileManager : selects profile
+AuthProfileManager --> FailoverHandler : failover
+FailoverHandler --> RateLimitGuard : rate limit protection
+ResponseGenerator --> OpenAI : API call
+ResponseGenerator --> Anthropic : API call
+ResponseGenerator --> OtherLLM : API call
+TokenTracker --> ResponseGenerator : tracks usage
+ContextManager --> SessionCore : manages context
+MemorySystem --> MemoryDB : persists
+SessionCore --> SessionsDB : stores history
+
+@enduml

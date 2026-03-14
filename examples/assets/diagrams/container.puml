@@ -1,0 +1,74 @@
+@startuml OpenClaw_Container
+title OpenClaw - Container Diagram (C4 Container)
+
+skinparam monochrome false
+skinparam defaultFontName Arial
+skinparam backgroundColor #FFFFFF
+
+actor "User" as user
+
+package "OpenClaw System" as openclaw {
+    package "Application Layer" {
+        component "CLI\n[TypeScript/Node.js]" as cli
+        component "Gateway\n[TypeScript/Node.js]" as gateway
+        component "Pi Agent Runtime\n[TypeScript/Node.js]" as agent
+        component "WebChat UI\n[HTML/CSS/JS]" as webchat
+        component "Canvas Host\n[TypeScript/JS]" as canvas
+    }
+    package "Channel Layer" {
+        component "Telegram Handler" as telegram_h
+        component "WhatsApp Handler" as whatsapp_h
+        component "Slack Handler" as slack_h
+        component "Discord Handler" as discord_h
+        component "Signal Handler" as signal_h
+        component "Other Channels" as other_h
+    }
+    package "Tools Layer" {
+        component "Browser Controller\n[Playwright]" as browser
+        component "Media Pipeline" as media
+        component "Cron Scheduler" as cron
+        component "Hooks Engine" as hooks
+    }
+    package "Storage Layer" {
+        database "Sessions Store\n[SQLite]" as sessions_db
+        database "Config Store\n[JSON]" as config_db
+        database "Pairing Store\n[SQLite]" as pairing_db
+        database "Allowlist Store\n[SQLite]" as allowlist_db
+    }
+}
+
+rectangle "Telegram Servers" as telegram_ext
+rectangle "WhatsApp Servers" as whatsapp_ext
+rectangle "Slack Servers" as slack_ext
+rectangle "Discord Servers" as discord_ext
+rectangle "OpenAI API" as openai
+rectangle "Anthropic API" as anthropic
+
+user --> cli : executes commands
+user --> webchat : accesses UI
+cli --> gateway : WebSocket:18789
+webchat --> gateway : HTTP/WS
+gateway --> agent : RPC/AC Protocol
+gateway --> telegram_h : routes messages
+gateway --> whatsapp_h : routes messages
+gateway --> slack_h : routes messages
+gateway --> discord_h : routes messages
+gateway --> signal_h : routes messages
+gateway --> other_h : routes messages
+telegram_h --> telegram_ext : Bot API
+whatsapp_h --> whatsapp_ext : Baileys
+slack_h --> slack_ext : Bolt API
+discord_h --> discord_ext : discord.js
+agent --> browser : calls tool
+agent --> media : calls tool
+agent --> cron : schedules tasks
+agent --> hooks : triggers events
+gateway --> sessions_db : read/write
+gateway --> config_db : read/write
+gateway --> pairing_db : read/write
+gateway --> allowlist_db : read/write
+agent --> openai : API call
+agent --> anthropic : API call
+gateway --> canvas : renders canvas
+
+@enduml

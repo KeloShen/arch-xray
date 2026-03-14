@@ -1,0 +1,178 @@
+@startuml OpenClaw_Core_Class
+title OpenClaw - Core Class Diagram
+
+skinparam monochrome false
+skinparam defaultFontName Arial
+skinparam backgroundColor #FFFFFF
+
+class OpenClawConfig {
+    +gateway: GatewayConfig
+    +channels: ChannelConfig
+    +models: ModelConfig
+    +auth: AuthConfig
+    +secrets: SecretsConfig
+}
+
+class GatewayConfig {
+    +bind: string
+    +port: number
+    +auth: {mode: string}
+    +tailscale: {mode: string}
+}
+
+class AuthProfile {
+    +id: string
+    +provider: string
+    +credentials: Credential[]
+    +lastGood: Date
+    +cooldownUntil?: Date
+}
+
+class Credential {
+    +type: "api-key" | "oauth"
+    +value: string
+    +expiresAt?: Date
+}
+
+class GatewaySession {
+    +id: string
+    +key: SessionKey
+    +displayName: string
+    +thinkingLevel: string
+    +model: string
+    +totalTokens: number
+    +updatedAt: Date
+}
+
+class SessionKey {
+    +channelId?: string
+    +accountId?: string
+    +roomId?: string
+    +threadId?: string
+}
+
+class SessionConfig {
+    +thoughtLevel: string
+    +fastMode: boolean
+    +verboseLevel: string
+    +elevatedLevel: string
+}
+
+class GatewayEvent {
+    +type: EventType
+    +payload: any
+    +timestamp: Date
+}
+
+class MessageEvent {
+    +channelId: string
+    +accountId: string
+    +roomId: string
+    +senderName: string
+    +text: string
+    +attachments: Attachment[]
+}
+
+class ToolCallEvent {
+    +toolName: string
+    +input: any
+    +status: "pending" | "running" | "completed" | "failed"
+}
+
+class ChannelManager {
+    +channels: Map<string, Channel>
+    +register(channel: Channel): void
+    +unregister(channelId: string): void
+    +routeMessage(event: MessageEvent): void
+}
+
+class Channel {
+    +id: string
+    +type: ChannelType
+    +status: ChannelStatus
+    +connect(): Promise<void>
+    +sendMessage(to: string, text: string): Promise<void>
+    +disconnect(): Promise<void>
+}
+
+class ChannelStatus {
+    +connected: boolean
+    +lastSeen: Date
+    +error?: string
+}
+
+class NodeRegistry {
+    +nodes: Map<string, Node>
+    +register(node: Node): void
+    +invoke(nodeId: string, action: string, params: any): Promise<any>
+}
+
+class Node {
+    +id: string
+    +type: "macos" | "ios" | "android"
+    +capabilities: string[]
+    +permissions: Map<string, Permission>
+}
+
+class ToolRegistry {
+    +tools: Map<string, Tool>
+    +register(tool: Tool): void
+    +execute(toolName: string, input: any): Promise<any>
+}
+
+class Tool {
+    +name: string
+    +description: string
+    +inputSchema: JSONSchema
+    +execute(input: any): Promise<any>
+}
+
+class BrowserTool {
+    +browser: Browser
+    +open(url: string): Promise<void>
+    +screenshot(): Promise<Buffer>
+    +click(selector: string): Promise<void>
+}
+
+OpenClawConfig --> GatewayConfig
+OpenClawConfig --> AuthProfile
+GatewaySession --> SessionKey
+GatewaySession --> SessionConfig
+GatewayEvent <|-- MessageEvent
+GatewayEvent <|-- ToolCallEvent
+ChannelManager --> Channel
+Channel --> ChannelStatus
+NodeRegistry --> Node
+ToolRegistry --> Tool
+Tool <|-- BrowserTool
+
+note "Configuration system with hot-reload\nand multiple authentication methods" as ConfigNote
+note "Session system with multi-agent routing\nand context management" as SessionNote
+note "Channel layer supports 20+ messaging platforms" as ChannelNote
+note "Tools layer includes browser control,\nCanvas, media processing" as ToolNote
+
+note right of AuthProfile
+    Supports OAuth and API Key
+    Automatic failover
+    Rate Limit protection
+end note
+
+note right of GatewaySession
+    Dynamic thinking level adjustment
+    Token usage tracking
+    Context window management
+end note
+
+note right of Channel
+    Unified message abstraction
+    Supports group and direct chats
+    Auto-reconnect mechanism
+end note
+
+note right of Node
+    Device capability discovery
+    Permission mapping
+    TCC integration (macOS)
+end note
+
+@enduml

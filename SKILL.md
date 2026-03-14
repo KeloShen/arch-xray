@@ -2,7 +2,7 @@
 name: arch-xray
 description: System architecture analysis skill. Triggers when users want to explore codebases, understand system architecture, analyze file/function interactions, onboard to new projects, or request code review/security insights. Generates PlantUML diagrams with detailed explanations.
 ---
-# Arch-XRay 架构 X 光
+# Arch-XRay 
 
 ## 技能概述
 

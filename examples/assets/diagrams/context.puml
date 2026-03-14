@@ -1,0 +1,66 @@
+@startuml OpenClaw_Context
+title OpenClaw - System Context Diagram (C4 Context)
+
+skinparam monochrome false
+skinparam defaultFontName Arial
+skinparam backgroundColor #FFFFFF
+
+actor "User" as user
+actor "Developer" as dev
+
+package "OpenClaw System" as openclaw {
+    component "Gateway\n[WebSocket Control Plane]" as gateway
+    component "Pi Agent\n[AI Agent Runtime]" as agent
+    component "CLI\n[Command Line Tool]" as cli
+    component "WebChat\n[Web Interface]" as webchat
+}
+
+rectangle "WhatsApp" as whatsapp
+rectangle "Telegram" as telegram
+rectangle "Slack" as slack
+rectangle "Discord" as discord
+rectangle "Signal" as signal
+rectangle "iMessage/BlueBubbles" as imessage
+rectangle "Other Channels" as other_channels
+
+rectangle "OpenAI API" as openai
+rectangle "Anthropic API" as anthropic
+rectangle "Other LLMs" as other_ai
+
+rectangle "macOS App" as macos_app
+rectangle "iOS App" as ios_app
+rectangle "Android App" as android_app
+
+rectangle "Tailscale" as tailscale
+rectangle "ClawHub" as clawhub
+
+user --> cli : uses
+user --> webchat : accesses
+user --> macos_app : runs
+user --> ios_app : runs
+user --> android_app : runs
+user --> whatsapp : sends messages
+user --> telegram : sends messages
+user --> slack : sends messages
+user --> discord : sends messages
+gateway <--> whatsapp : communicates
+gateway <--> telegram : communicates
+gateway <--> slack : communicates
+gateway <--> discord : communicates
+gateway <--> signal : communicates
+gateway <--> imessage : communicates
+gateway <--> other_channels : communicates
+gateway --> agent : manages (RPC)
+gateway --> cli : WebSocket
+gateway --> webchat : HTTP/WS
+agent <--> openai : calls API
+agent <--> anthropic : calls API
+agent <--> other_ai : calls API
+macos_app <--> gateway : WebSocket
+ios_app <--> gateway : WebSocket
+android_app <--> gateway : WebSocket
+gateway --> tailscale : optional integration
+agent --> clawhub : optional query
+dev --> gateway : develops/deploys
+
+@enduml
