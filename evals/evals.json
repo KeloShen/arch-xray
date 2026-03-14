@@ -1,0 +1,47 @@
+{
+  "skill_name": "arch-xray",
+  "evals": [
+    {
+      "id": 1,
+      "name": "full-architecture-analysis",
+      "prompt": "我想学习这个代码库的架构，请帮我分析整个系统，包括生成架构图、解释文件结构、说明主要功能是如何实现的。",
+      "expected_output": "生成 C4 PlantUML 架构图（Context 和 Container），详细的项目结构讲解，核心功能的数据流分析",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "specific-module-learn",
+      "prompt": "我想了解前端的认证登录功能是怎么实现的，从用户输入密码到登录成功，整个流程经过了哪些文件和函数？",
+      "expected_output": "登录流程的调用链分析，涉及的文件列表和函数说明，序列图或流程图",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "language-learning",
+      "prompt": "我不太懂 TypeScript，能不能教我这个项目里用到的 TypeScript 语法，特别是 interface、async/await 这些，并且用项目里的实际代码做例子。",
+      "expected_output": "TypeScript 基础语法讲解，项目中的实际使用示例，每语法特性的三层讲解（是什么/怎么用/为什么）",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "code-review-request",
+      "prompt": "帮我审查一下这个项目的代码，看看有没有什么 bug 风险或者安全问题，特别是认证和数据存储相关的。",
+      "expected_output": "代码审查报告，识别安全风险和 bug，提供改进建议和正确做法示例",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "feature-guidance",
+      "prompt": "我想在这个系统里添加一个用户注销（logout）功能，应该修改哪些文件？能给我一步步的引导吗？",
+      "expected_output": "功能实现引导文档，相关修改文件列表，详细的实现步骤，代码示例和测试建议",
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "backend-api-analysis",
+      "prompt": "帮我分析一下后端的 API 架构，Controller、Service、Repository 是怎么组织的？一个 HTTP 请求是怎么被处理的？",
+      "expected_output": "后端分层架构图，请求处理流程说明，关键类的职责和交互关系",
+      "files": []
+    }
+  ]
+}
