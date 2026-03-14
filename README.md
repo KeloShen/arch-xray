@@ -1,223 +1,224 @@
-# arch-xray 架构 X 光
+# arch-xray
 
-> **一眼看透你的代码库 · 30 分钟从陌生到上手**
-
----
-
-## 🎯 能做什么？
-
-| 功能              | 说明                                                                |
-| ----------------- | ------------------------------------------------------------------- |
-| 📐**生成架构图**   | C4 标准 PlantUML 图表（Context/Container/Component/Sequence/Class） |
-| 🔍**分析代码结构** | 文件夹组织、文件互动、函数调用链                                    |
-| 🛠️**技术栈识别**   | 自动识别框架、库和核心技术                                          |
-| 📋**代码审查**     | 指出 bug、安全漏洞、最佳实践建议                                    |
-| 📚**语言教学**     | 项目使用的编程语言语法教学                                          |
-| 🧭**开发引导**     | 实现新功能的详细步骤                                                |
+> **See Through Your Codebase in 30 Minutes**
 
 ---
 
-## 📸 效果示例（以分析 OpenClaw 为例）
+**🌐 Language:** **English** | [简体中文](./README.zh.md)
 
-运行 arch-xray 后，生成完整的分析报告：
+---
+
+## 🎯 What Can It Do?
+
+| Feature | Description |
+|---------|-------------|
+| 📐 **Generate Architecture Diagrams** | C4-standard PlantUML diagrams (Context/Container/Component/Sequence/Class) |
+| 🔍 **Analyze Code Structure** | Folder organization, file interactions, function call chains |
+| 🛠️ **Tech Stack Detection** | Automatically identify frameworks, libraries, and core technologies |
+| 📋 **Code Review** | Identify bugs, security vulnerabilities, and best practice recommendations |
+| 📚 **Language Tutorials** | Syntax tutorials for programming languages used in the project |
+| 🧭 **Development Guide** | Step-by-step guidance for implementing new features |
+
+---
+
+## 📸 Live Demo (Analyzing OpenClaw)
+
+Run arch-xray to generate a complete analysis report:
 
 ```
 xray/
 ├── docs/
-│   ├── architecture-overview.md     # 架构概览（含 SVG 图）
-│   ├── component-details.md         # 组件详情
-│   ├── data-flow.md                 # 数据流分析
-│   ├── project-structure.md         # 项目结构说明
-│   ├── code-review.md               # 代码审查报告
-│   └── language-tutorials/          # 编程语言教程
+│   ├── architecture-overview.md     # Architecture overview (with SVG diagrams)
+│   ├── component-details.md         # Component details
+│   ├── data-flow.md                 # Data flow analysis
+│   ├── project-structure.md         # Project structure documentation
+│   ├── code-review.md               # Code review report
+│   └── language-tutorials/          # Programming language tutorials
 └── assets/diagrams/
-    ├── context.svg                  # 系统上下文图
-    ├── container.svg                # 容器图
-    ├── component-gateway.svg        # Gateway 组件图
-    ├── component-agent.svg          # Agent 组件图
-    └── class-core.svg               # 核心类图
+    ├── context.svg                  # System context diagram
+    ├── container.svg                # Container diagram
+    ├── component-gateway.svg        # Gateway component diagram
+    ├── component-agent.svg          # Agent component diagram
+    └── class-core.svg               # Core class diagram
 ```
 
-### 📊 生成的架构图
+### 📊 Generated Architecture Diagrams
 
-#### L1 - 系统上下文图 (Context Diagram)
+#### L1 - Context Diagram
 
 ![Context Diagram](./examples/assets/diagrams/context.svg)
 
-展示系统与外部用户/系统的关系
+Shows the relationship between the system and external users/systems
 
 ---
 
-#### L2 - 容器图 (Container Diagram)
+#### L2 - Container Diagram
 
 ![Container Diagram](./examples/assets/diagrams/container.svg)
 
-展示前端/后端/数据库等容器划分
+Shows the distribution of applications, databases, and microservices
 
 ---
 
-#### L3 - 组件图 (Component Diagram)
+#### L3 - Component Diagram
 
 ![Component - Gateway](./examples/assets/diagrams/component-gateway.svg)
 
-**Gateway 服务内部组件**
+**Internal components of the Gateway service**
 
 ![Component - Agent](./examples/assets/diagrams/component-agent.svg)
 
-**Pi Agent 运行时内部组件**
+**Internal components of the Pi Agent runtime**
 
 ---
 
-#### L4 - 类图 (Class Diagram)
+#### L4 - Class Diagram
 
 ![Class Diagram](./examples/assets/diagrams/class-core.svg)
 
-核心类的设计和关系
+Design and relationships of core classes
 
 ---
 
-### 📄 生成的文档示例
+### 📄 Generated Documentation Samples
 
-#### 架构概览文档
+#### Architecture Overview
 
-生成类似 [architecture-overview.md](./examples/docs/architecture-overview.md) 的文档，包含：
+Generates documentation like [architecture-overview.md](./examples/docs/architecture-overview.md), including:
 
-- 系统简介与核心价值
-- 技术栈识别与说明
-- 核心子系统详解
-- 数据流分析
-- 安全设计说明
-- 部署架构图解
+- System introduction and core value proposition
+- Technology stack identification and explanation
+- Core subsystem details
+- Data flow analysis
+- Security design documentation
+- Deployment architecture diagrams
 
-#### 代码审查报告
+#### Code Review Report
 
-生成类似 [code-review.md](./examples/docs/code-review.md) 的报告，包含：
+Generates reports like [code-review.md](./examples/docs/code-review.md), including:
 
-| 维度     | 评分  | 说明                             |
-| -------- | ----- | -------------------------------- |
-| 代码质量 | 4.5/5 | 类型安全、结构清晰、测试覆盖率高 |
-| 安全性   | 4/5   | 良好的安全实践，少数需要注意的点 |
-| 可维护性 | 4.5/5 | 模块化设计、命名规范、文档完善   |
-| 性能     | 4/5   | 合理的优化，有进一步提升空间     |
-| 测试覆盖 | 4/5   | 测试覆盖率高，部分边界情况可加强 |
+| Dimension | Score | Description |
+|-----------|-------|-------------|
+| Code Quality | 4.5/5 | Type-safe, well-structured, high test coverage |
+| Security | 4/5 | Good security practices, few points to note |
+| Maintainability | 4.5/5 | Modular design, standardized naming, complete documentation |
+| Performance | 4/5 | Reasonable optimizations, room for improvement |
+| Test Coverage | 4/5 | High coverage, some edge cases could be strengthened |
 
-**具体问题分析示例：**
+**Specific Issue Analysis Example:**
 
 ```typescript
-// ⚠️ 发现的问题：文件大小超过建议值
-src/gateway/server.impl.ts    ~1200 行
-src/agents/auth-profiles.ts   ~900 行
+// ⚠️ Issue identified: File size exceeds recommended limit
+src/gateway/server.impl.ts    ~1200 lines
+src/agents/auth-profiles.ts   ~900 lines
 
-// ✅ 建议：拆分为更小的模块
+// ✅ Recommendation: Split into smaller modules
 src/gateway/
-├── server.impl.ts        # 主入口
-├── server.auth.ts        # 认证逻辑
-├── server.methods.ts     # WS 方法处理
-├── server.channels.ts    # 渠道管理
-└── server.sessions.ts    # 会话管理
+├── server.impl.ts        # Main entry point
+├── server.auth.ts        # Authentication logic
+├── server.methods.ts     # WS method handlers
+├── server.channels.ts    # Channel management
+└── server.sessions.ts    # Session management
 ```
 
-**安全风险示例：**
+**Security Risk Examples:**
 
-| 风险等级 | 问题                 | 建议                     |
-| :------- | -------------------- | ------------------------ |
-| 🔴 高     | Prompt 缺少大小限制  | 添加 2MB 限制防止 DoS    |
-| 🟡 中     | 输入缺少类型验证     | 使用 Zod 等库进行验证    |
-| 🟢 低     | 错误信息可能泄露细节 | 内部错误不直接返回给用户 |
+| Risk Level | Issue | Recommendation |
+|:-----------|:------|:---------------|
+| 🔴 High | Missing prompt size limits | Add 2MB limit to prevent DoS attacks |
+| 🟡 Medium | Missing input type validation | Use libraries like Zod for validation |
+| 🟢 Low | Error messages may leak details | Don't return internal errors directly to users |
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. 安装 PlantUML
+### 1. Install PlantUML
 
 **macOS**
-
 ```bash
 brew install plantuml
 ```
 
 **Linux**
-
 ```bash
 sudo apt-get install plantuml
 ```
 
 **Windows**
-
 ```powershell
 scoop install plantuml
-# 或
+# or
 choco install plantuml
 ```
 
-> 💡 **懒人方法**：直接告诉 AI Agent
-> "检测我的运行系统环境，帮我安装 plantuml"
+> 💡 **Lazy Method**: Just tell your AI Agent
+> "Detect my system and install plantuml for me"
 
-### 2. 安装 arch-xray
+### 2. Install arch-xray
 
-使用 [OpenSkills](https://github.com/numman-ali/openskills) 加载技能：
+Use [OpenSkills](https://github.com/numman-ali/openskills) to load the skill:
 
 ```bash
-# 安装 OpenSkills（可选）
+# Install OpenSkills (optional)
 npm i -g openskills
 
-# 一键安装 arch-xray
+# One-click install arch-xray
 npx openskills install keloshen/arch-xray
 
-# 确认安装
+# Verify installation
 npx openskills list
 ```
 
 ---
 
-## 💡 如何使用
+## 💡 How to Use
 
-### 自动触发
+### Automatic Trigger
 
-当你说这些话时，技能会**自动激活**：
+The skill will **auto-activate** when you say things like:
 
-- "我想学习这个代码库"
-- "这个系统是怎么工作的？"
-- "帮我分析一下架构"
-- "如何实现 X 功能？"
-- "帮我画个架构图"
+- "I want to learn this codebase"
+- "How does this system work?"
+- "Help me analyze the architecture"
+- "How do I implement feature X?"
+- "Draw an architecture diagram for me"
 
-### 手动触发
+### Manual Trigger
 
-在 Claude Code / Cursor 中输入：
+In Claude Code / Cursor, type:
 
 ```
 /arch-xray
 ```
 
-然后描述你的需求即可。
+Then describe your needs.
 
 ---
 
-## 📖 使用示例
+## 📖 Usage Examples
 
-| 场景             | 命令                            | 输出                                  |
-| ---------------- | ------------------------------- | ------------------------------------- |
-| **分析整个项目** | `帮我分析这个项目的架构`        | Context + Container 图 + 架构概览文档 |
-| **查看特定模块** | `分析 src/services 目录`        | Component 图 + 文件互动分析           |
-| **代码审查**     | `这段代码有什么潜在问题？`      | 风险清单 + 改进建议                   |
-| **学习新技术**   | `这个项目用了 TypeScript，教我` | 语法教程 + 项目实例                   |
-| **开发新功能**   | `如何添加一个新的 API 端点？`   | 逐步引导 + 相关文件清单               |
-
----
-
-## 📁 完整输出结构
-
-查看 [examples/](./examples/) 目录，包含完整的 OpenClaw 分析报告：
-
-- [架构概览](./examples/docs/architecture-overview.md)
-- [组件详情](./examples/docs/component-details.md)
-- [数据流分析](./examples/docs/data-flow.md)
-- [代码审查报告](./examples/docs/code-review.md)
-- [项目结构说明](./examples/docs/project-structure.md)
-- [TypeScript 教程](./examples/docs/language-tutorials/typescript-basics.md)
+| Scenario | Command | Output |
+|----------|---------|--------|
+| **Analyze entire project** | `Help me analyze this project's architecture` | Context + Container diagrams + Architecture overview doc |
+| **View specific module** | `Analyze the src/services directory` | Component diagram + File interaction analysis |
+| **Code review** | `Are there any potential issues with this code?` | Risk list + Improvement recommendations |
+| **Learn new technology** | `This project uses TypeScript, teach me` | Syntax tutorial + Project examples |
+| **Develop new feature** | `How do I add a new API endpoint?` | Step-by-step guide + List of relevant files |
 
 ---
 
-> *arch-xray - 让架构一目了然*
+## 📁 Complete Output Structure
+
+Check the [examples/](./examples/) directory for a complete OpenClaw analysis report:
+
+- [Architecture Overview](./examples/docs/architecture-overview.md)
+- [Component Details](./examples/docs/component-details.md)
+- [Data Flow Analysis](./examples/docs/data-flow.md)
+- [Code Review Report](./examples/docs/code-review.md)
+- [Project Structure](./examples/docs/project-structure.md)
+- [TypeScript Tutorial](./examples/docs/language-tutorials/typescript-basics.md)
+
+---
+
+> *arch-xray - Making architecture clear at a glance*
