@@ -125,42 +125,107 @@ xray/
 
 #### 4.3 PlantUML 语法规范 ⚠️ 重要
 
-**必须使用标准 PlantUML 箭头语法，不要使用 C4-PlantUML 扩展！**
+**必须使用标准 PlantUML 语法，不要使用任何扩展！**
 
-| ❌ 错误（C4 扩展）        | ✅ 正确（标准语法）          |
-| ------------------------ | --------------------------- |
-| `Rel(A, B, "label")`     | `A --> B : label`           |
-| `BiRel(A, B, "label")`   | `A <--> B : label`          |
-| `System(name, desc)`     | `component "name" as alias` |
+### ❌ 禁止使用的 C4-PlantUML 扩展函数
+
+| ❌ 禁止使用 | ✅ 正确用法 |
+| ----------- | ----------- |
+| `Rel(A, B, "label")` | `A --> B : label` |
+| `BiRel(A, B, "label")` | `A <--> B : label` |
+| `rel_down(A, B, "label")` | `A --> B : label` (使用 note 添加额外说明) |
+| `rel_right(A, B, "label")` | `A --> B : label` (使用 note 添加额外说明) |
+| `System(name, desc)` | `component "name" as alias` |
 | `System_Ext(name, desc)` | `rectangle "name" as alias` |
+| `Container(name, desc)` | `component "name" as alias` |
+| `Component(name, desc)` | `component "name" as alias` |
 
-**标准连接语法：**
+### ❌ 禁止使用的嵌套语法
+
+**不要使用嵌套组件定义（component {} 内部再定义 component）**
+
+```plantuml
+' ❌ 错误 - 嵌套组件
+component "System" {
+  component "SubComponent" as Sub
+}
+```
+
+**正确做法 - 扁平化定义：**
+
+```plantuml
+' ✅ 正确 - 扁平化定义
+component "System" as Sys
+component "SubComponent" as Sub
+Sys --> Sub : uses
+```
+
+### ✅ 标准连接语法
 
 - `A --> B : label` - 单向箭头
 - `A <--> B : label` - 双向箭头
 - `A -- B : label` - 无箭头连线
 - `A ..> B : label` - 虚线箭头
+- `A .. B : label` - 虚线无箭头
 
-**元素定义语法：**
+### ✅ 元素定义语法
 
-- `component "名称" as 别名` - 组件
-- `rectangle "名称" as 别名` - 外部系统/矩形
+- `component "名称" as 别名` - 组件/容器
+- `rectangle "名称" as 别名` - 外部系统/矩形框
 - `database "名称" as 别名` - 数据库
 - `actor "名称" as 别名` - 角色
+- `package "名称" { ... }` - 包分组（可以嵌套）
 
-**语言规范：**
+### ✅ 注释语法
 
-- **PlantUML 图中的所有标签、标题、注释必须使用英文**
-- 例如：`component "Gateway Server" as gateway` ✅
-- 不要使用中文或其他语言：`component "网关服务器" as gateway` ❌
+```plantuml
+' 单行注释
+
+note right of Component
+  多行注释
+  第二行
+end note
+
+note "内联注释" as NoteAlias
+```
+
+### 语言规范
+
+**PlantUML 图中的所有标签、标题、注释必须使用英文**
+
+- ✅ `component "Gateway Server" as gateway`
+- ❌ `component "网关服务器" as gateway`
 
 **为什么？**
 
-1. `Rel()` 是 C4-PlantUML 的扩展函数，标准 PlantUML 不支持，会导致语法错误
+1. `Rel()`, `rel_down()` 等是 C4-PlantUML 的扩展函数，标准 PlantUML 不支持
 2. 英文标签确保架构图在任何环境都能正确显示，避免字体/编码问题
 3. 讲解文档可以使用用户选择的语言，但架构图保持英文作为通用标准
 
-**验证方法：** 生成后检查 SVG 文件，如果看到黑色背景 + 源代码显示，说明语法有误，需要修复。
+### 🚫 禁止导入远程库
+
+不要使用 `!include` 导入远程 C4-PlantUML 库：
+
+```plantuml
+' ❌ 禁止
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4.puml
+!include https://.../C4_Context.puml
+```
+
+### ✅ 验证清单
+
+生成 PlantUML 文件后，检查：
+
+- [ ] 没有使用 `Rel()`, `BiRel()`, `rel_down()`, `rel_right()` 等函数
+- [ ] 没有嵌套 component 定义（component {} 内再定义 component）
+- [ ] 没有 `!include` 远程 C4-PlantUML 库
+- [ ] 所有标签使用英文
+- [ ] 使用标准箭头语法 (`-->`, `<-->`, `--`, `..>`)
+
+**验证方法：** 生成后检查 SVG 文件，如果出现以下情况说明语法有误：
+- 黑色背景 + 源代码显示
+- 错误信息如 "Syntax Error?"
+- 缺失图形元素
 
 ### Step 5: 编写讲解文档
 
