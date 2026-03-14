@@ -11,8 +11,6 @@
 xray/
 output/
 
-# PlantUML generated files
-*.svg
 
 # Logs
 *.log
