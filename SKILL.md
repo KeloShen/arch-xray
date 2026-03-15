@@ -1,6 +1,6 @@
 ---
 name: arch-xray
-description: System architecture analysis skill. Triggers when users want to explore codebases, understand system architecture, analyze file/function interactions, onboard to new projects, or request code review/security insights. Generates PlantUML diagrams with detailed explanations.
+description: Use when users want to explore a codebase, understand system architecture, analyze file and function interactions, onboard to a project, review code quality, or reverse-engineer how to rebuild a system from scratch. Generates PlantUML diagrams, explanatory documentation, and step-by-step implementation guides that explain what to build, in what order, and why.
 ---
 # Arch-XRay 
 
@@ -13,6 +13,7 @@ description: System architecture analysis skill. Triggers when users want to exp
 3. **掌握编程语言** - 提供语法教学，结合实际代码示例
 4. **发现潜在问题** - 指出 bug 风险、安全漏洞、最佳实践建议
 5. **引导功能开发** - 提供实现新功能的详细步骤引导
+6. **拆解系统复现路径** - 输出从宏观到微观的“手搓复现”文档，告诉用户先做什么、后做什么，以及为什么
 
 ## 触发场景
 
@@ -26,6 +27,9 @@ description: System architecture analysis skill. Triggers when users want to exp
 - "这个代码有 bug 吗？"
 - "帮我画个架构图"
 - "我不懂这个语言，能教我吗？"
+- "我想自己手搓复现这个系统"
+- "如果从 0 开始重做这个项目，应该怎么拆？"
+- "告诉我每一步该做什么、为什么这样做"
 
 ## 工作流程
 
@@ -60,7 +64,10 @@ xray/
 │   ├── data-flow.md                # 数据流分析
 │   ├── project-structure.md        # 项目结构说明
 │   ├── code-review.md              # 代码审查报告
-│   └── language-tutorials/         # 编程语言教程
+│   ├── language-tutorials/         # 编程语言教程
+│   └── guides/                     # 开发与复现引导
+│       ├── feature-{name}.md       # 功能实现引导
+│       └── rebuild-system.md       # 手搓复现系统指南
 └── assets/            # 资源目录 - PlantUML 源文件、SVG 图片等
     ├── diagrams/      # PlantUML 源文件和 SVG 图片
     │   ├── context.puml
@@ -76,6 +83,7 @@ xray/
 
 - `xray/docs/` - 所有文档放在这里，用户可以方便地打开查看
 - `xray/assets/` - 图片资源和源文件，支持文档中的引用
+- `xray/docs/guides/rebuild-system.md` - 当用户想复现、重构、临摹当前系统时，必须生成这份宏观到微观的路线图
 
 ### Step 3: 分析代码库
 
@@ -97,6 +105,16 @@ xray/
 - **核心模块** - 被频繁导入/依赖的文件
 - **数据流** - API 调用、数据库操作、状态管理
 - **外部依赖** - 第三方库、服务集成
+
+#### 3.3 识别“最小可复现骨架”
+
+如果用户希望理解如何自己实现一个类似系统，额外识别：
+
+- **核心目标** - 这个系统最不可缺少的价值是什么
+- **MVP 能力** - 哪 20% 的模块能支撑 80% 的演示价值
+- **构建顺序** - 哪些模块必须先出现，哪些可以后补
+- **关键接口** - 模块之间靠什么协议、数据结构或约定协作
+- **验证节点** - 每个阶段完成后，用户应该如何确认自己走对了
 
 ### Step 4: 生成架构图
 
@@ -301,6 +319,33 @@ note "内联注释" as NoteAlias
 - **测试建议** - 如何验证功能
 - **常见问题** - 可能遇到的坑
 
+#### 5.6 系统复现引导文档
+
+当用户表达“想自己做一个类似 xray 的系统”“想手搓复现”“想知道从哪里开始”这类意图时，读取 `references/xray-rebuilder.md`，并额外编写：
+
+- `xray/docs/guides/rebuild-system.md` - 从宏观到微观的系统复现指南
+
+这份文档必须满足以下要求：
+
+- **先讲目标，再讲实现** - 先回答这个系统解决什么问题、输出什么结果，再进入代码和模块
+- **先讲顺序，再讲细节** - 明确每一步的先后依赖，不要把并列事项写成流水账
+- **每一步都说明 What / Why / How / Done**
+  What：这一阶段要做什么
+  Why：为什么先做它、它解决什么问题
+  How：建议修改哪些文件、建立哪些模块、定义哪些接口
+  Done：做到什么程度算这一步完成
+- **强制使用宏观到微观结构**
+  1. 系统目标与用户价值
+  2. 最小可用版本（MVP）边界
+  3. 核心模块拆分
+  4. 数据流与执行流
+  5. 推荐实现顺序
+  6. 每一步的验证方式
+  7. 可选增强项与延后事项
+- **必须直说取舍** - 明确告诉用户哪些东西第一版不要做，以及为什么不要现在做
+- **必须引用当前仓库** - 复现指南要绑定当前代码库里的真实脚本、目录、文件与设计，而不是写成通用空话
+- **默认对初学者友好** - 用直白语言解释术语，必要时补一个“你现在可以先忽略什么”的提示
+
 ### Step 6: 交付与迭代
 
 1. **展示成果** - 向用户展示生成的文件和图表
@@ -363,6 +408,7 @@ note "内联注释" as NoteAlias
 - `references/language-master.md` - 语言大师角色设定
 - `references/code-critic.md` - 代码批评家角色设定
 - `references/dev-guide.md` - 开发引导者角色设定
+- `references/xray-rebuilder.md` - 手搓复现 arch-xray 的写作框架
 
 ## 输出规范
 

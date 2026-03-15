@@ -15,7 +15,8 @@ xray/
 │   │   ├── typescript-basics.md
 │   │   └── ...
 │   └── guides/                    # 开发引导文档
-│       └── feature-*.md
+│       ├── feature-*.md
+│       └── rebuild-system.md      # 复现当前系统的宏观到微观指南
 └── assets/                        # 资源目录 - 图片和源文件
     ├── diagrams/                  # PlantUML 源文件和 SVG 图片
     │   ├── context.puml           # 系统上下文图（源文件）
@@ -68,6 +69,7 @@ code xray/docs/architecture-overview.md
 - 图表：`{项目名}_{图类型}.svg`（如 `TxInsight_Context.svg`）
 - 教程：`{语言}-{级别}.md`（如 `java-basics.md`）
 - 引导：`feature-{功能名}.md`（如 `feature-add-auth.md`）
+- 系统复现：`rebuild-system.md`
 
 ### 图表类型
 - `Context` - 系统上下文图

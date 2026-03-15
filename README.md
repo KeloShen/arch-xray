@@ -18,6 +18,7 @@
 | 📋 **Code Review** | Identify bugs, security vulnerabilities, and best practice recommendations |
 | 📚 **Language Tutorials** | Syntax tutorials for programming languages used in the project |
 | 🧭 **Development Guide** | Step-by-step guidance for implementing new features |
+| 🧱 **Rebuild Guide** | A macro-to-micro document for recreating the system from scratch, including order, trade-offs, and validation checkpoints |
 
 ---
 
@@ -33,7 +34,9 @@ xray/
 │   ├── data-flow.md                 # Data flow analysis
 │   ├── project-structure.md         # Project structure documentation
 │   ├── code-review.md               # Code review report
-│   └── language-tutorials/          # Programming language tutorials
+│   ├── language-tutorials/          # Programming language tutorials
+│   └── guides/
+│       └── rebuild-system.md        # Step-by-step system rebuild guide
 └── assets/diagrams/
     ├── context.svg                  # System context diagram
     ├── container.svg                # Container diagram
@@ -205,6 +208,7 @@ Then describe your needs.
 | **Code review** | `Are there any potential issues with this code?` | Risk list + Improvement recommendations |
 | **Learn new technology** | `This project uses TypeScript, teach me` | Syntax tutorial + Project examples |
 | **Develop new feature** | `How do I add a new API endpoint?` | Step-by-step guide + List of relevant files |
+| **Rebuild the system** | `If I rebuild this tool from scratch, where do I start?` | Ordered implementation guide with What/Why/How/Done checkpoints |
 
 ---
 
@@ -218,6 +222,7 @@ Check the [examples/](./examples/) directory for a complete OpenClaw analysis re
 - [Code Review Report](./examples/docs/code-review.md)
 - [Project Structure](./examples/docs/project-structure.md)
 - [TypeScript Tutorial](./examples/docs/language-tutorials/typescript-basics.md)
+- [System Rebuild Guide](./examples/docs/guides/rebuild-system.md)
 
 ---
 

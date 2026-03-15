@@ -15,7 +15,8 @@ xray/
 │   ├── project-structure.md        # 项目结构说明
 │   ├── code-review.md              # 代码审查报告
 │   ├── guides/
-│   │   └── getting-started.md      # 开发引导
+│   │   ├── getting-started.md      # 开发引导
+│   │   └── rebuild-system.md       # 手搓复现指南
 │   └── language-tutorials/
 │       └── typescript-basics.md    # TypeScript 教程
 └── assets/
@@ -49,6 +50,7 @@ xray/
 | 文档 | 描述 | 适合人群 |
 |------|------|----------|
 | [开发引导](./docs/guides/getting-started.md) | 环境设置、代码修改、测试调试 | 新加入开发者 |
+| [手搓复现指南](./docs/guides/rebuild-system.md) | 从 0 到 1 复现 arch-xray 的顺序与取舍 | 想临摹系统设计的开发者 |
 
 ## 📈 架构图
 
@@ -71,12 +73,14 @@ xray/
 3. **阅读 [项目结构](./docs/project-structure.md)** - 了解代码在哪里
 4. **阅读 [TypeScript 教程](./docs/language-tutorials/typescript-basics.md)** - 学习所需技能
 5. **跟随 [开发引导](./docs/guides/getting-started.md)** - 开始编码
+6. **阅读 [手搓复现指南](./docs/guides/rebuild-system.md)** - 按顺序自己做一遍
 
 ### 有经验开发者路径
 
 1. **查看 [数据流分析](./docs/data-flow.md)** - 理解核心流程
 2. **阅读 [代码审查报告](./docs/code-review.md)** - 了解代码质量
 3. **开始 [开发引导](./docs/guides/getting-started.md)** - 设置环境
+4. **查看 [手搓复现指南](./docs/guides/rebuild-system.md)** - 评估如何快速复刻核心能力
 
 ### 架构师路径
 

@@ -18,6 +18,7 @@
 | 📋**代码审查**     | 指出 bug、安全漏洞、最佳实践建议                                    |
 | 📚**语言教学**     | 项目使用的编程语言语法教学                                          |
 | 🧭**开发引导**     | 实现新功能的详细步骤                                                |
+| 🧱**系统复现指南** | 从宏观到微观拆解如何手搓复现系统，说明顺序、取舍和验收点            |
 
 ---
 
@@ -33,7 +34,9 @@ xray/
 │   ├── data-flow.md                 # 数据流分析
 │   ├── project-structure.md         # 项目结构说明
 │   ├── code-review.md               # 代码审查报告
-│   └── language-tutorials/          # 编程语言教程
+│   ├── language-tutorials/          # 编程语言教程
+│   └── guides/
+│       └── rebuild-system.md        # 手搓复现指南
 └── assets/diagrams/
     ├── context.svg                  # 系统上下文图
     ├── container.svg                # 容器图
@@ -205,6 +208,7 @@ npx openskills list
 | **代码审查**     | `这段代码有什么潜在问题？`      | 风险清单 + 改进建议                   |
 | **学习新技术**   | `这个项目用了 TypeScript，教我` | 语法教程 + 项目实例                   |
 | **开发新功能**   | `如何添加一个新的 API 端点？`   | 逐步引导 + 相关文件清单               |
+| **复现整个系统** | `如果我想从 0 开始重做这个工具，该怎么拆？` | 带 What/Why/How/Done 的复现路线图 |
 
 ---
 
@@ -218,6 +222,7 @@ npx openskills list
 - [代码审查报告](./examples/docs/code-review.md)
 - [项目结构说明](./examples/docs/project-structure.md)
 - [TypeScript 教程](./examples/docs/language-tutorials/typescript-basics.md)
+- [手搓复现指南](./examples/docs/guides/rebuild-system.md)
 
 ---
 
